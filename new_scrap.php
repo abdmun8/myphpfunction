@@ -28,7 +28,7 @@ $emails = imap_search($connection,$messagestatus);
 //number of emails in the inbox
 $totalemails = imap_num_msg($connection);
   
-echo "Total Emails: " . $totalemails . "<br>";
+// echo "Total Emails: " . $totalemails . "<br>";
   
 if($emails) {
   
@@ -39,15 +39,14 @@ if($emails) {
 	$datalaz = array();
 	$dataelv = array();
 	$datasop = array();
-  //loop through every email int he inbox
+	//loop through every email int he inbox
 	$b=0;$l=0;$e=0;$s=0;
 
-function after ($this, $inthat)
-    {
+	function after ($this, $inthat){
         if (!is_bool(strpos($inthat, $this)))
         return substr($inthat, strpos($inthat,$this)+strlen($this));
     };
-  foreach($emails as $email_number) {
+  	foreach($emails as $email_number) {
     
     //grab the overview and message
     $header = imap_fetch_overview($connection,$email_number,0);
@@ -59,44 +58,73 @@ function after ($this, $inthat)
     }
     
     // print_r($header);
-    if(preg_match('/BLIBLI.COM/', $header[0]->from) && preg_match('/Pesanan\\sBaru/', $header[0]->subject)){
-	    // split the header array into variables
-	    // $status = ($header[0]->seen ? 'read' : 'unread');
+  //   if(preg_match('/BLIBLI.COM/', $header[0]->from) && preg_match('/Pesanan\\sBaru/', $header[0]->subject)){
+	 //    // split the header array into variables
+	 //    // $status = ($header[0]->seen ? 'read' : 'unread');
+	 //    // $subject = $header[0]->subject;
+	 //    // $from = $header[0]->from;
+	 //    // $date = $header[0]->date;
+	 //    $databli[$b]['subject']= $header[0]->subject;
+	 //    $databli[$b]['from']= $header[0]->from;
+	 //    $databli[$b]['date']= $header[0]->date;
+	 //    // $databli[$b]['message']= $message;
+	 //    $dom = new DOMDocument();
+	 //    $dom->loadHTML($message);
+	 //    $xpath = new DOMXPath($dom);
+		// $tables = $xpath->query('.//td/table'); // fetch all tables inside td
+		// $temp = array();
+		// foreach($tables as $table){
+		//    // Do your stuff with each table
+		//    $temp[] = $table->nodeValue; // $table is your current $table
+		// }
+
+		// // // if(preg_match('', subject))
+
+		// // $databli[$b]['message']= $temp[0];
+		// $new ='';
+		// // $temp[0] = substr($temp[0], -120, strpos($temp[0], "pada"));
+		// $new = after ('pada', $temp[0]);
+		// $msg = substr($new, 1,46);
+	 //    // print_r($new);
+	 //    // $split = explode("-",$msg);
+	 //    $new = trim($new);
+
+
+
+	 //    print_r($new);
+		// $a = preg_split("/\\s-\\s+/", $new);
+		// print_r($a);
+	 //    die;
+
+	    
+	 //    // echo "status: " . $status . "<br>";
+	 //    // echo "subject: " . $subject . "<br>";
+	 //    // echo "from: " . $from . "<br>";
+	 //    // echo "date: " . $date . "<br>";
+	 //    // echo "message: " . $message . "<br><hr><br>";
+	 //    $b++;
+  //   }	
+
+    // split the header array into variables
+    if(preg_match('/Lazada/', $header[0]->from) && preg_match('/New\\s/Order/', $header[0]->subject)){
+    	// $status = ($header[0]->seen ? 'read' : 'unread');
 	    // $subject = $header[0]->subject;
 	    // $from = $header[0]->from;
 	    // $date = $header[0]->date;
-	    $databli[$b]['subject']= $header[0]->subject;
-	    $databli[$b]['from']= $header[0]->from;
-	    $databli[$b]['date']= $header[0]->date;
-	    // $databli[$b]['message']= $message;
-	    $dom = new DOMDocument();
-	    $dom->loadHTML($message);
-	    $xpath = new DOMXPath($dom);
-		$tables = $xpath->query('.//td/table'); // fetch all tables inside td
-		$temp = array();
-		foreach($tables as $table){
-		   // Do your stuff with each table
-		   $temp[] = $table->nodeValue; // $table is your current $table
-		}
 
-		// // if(preg_match('', subject))
-
-		// $databli[$b]['message']= $temp[0];
-		$new ='';
-		// $temp[0] = substr($temp[0], -120, strpos($temp[0], "pada"));
-		$new = after ('pada', $temp[0]);
-
-	    print_r($new);
-	    die;
-
-	    
 	    // echo "status: " . $status . "<br>";
 	    // echo "subject: " . $subject . "<br>";
 	    // echo "from: " . $from . "<br>";
 	    // echo "date: " . $date . "<br>";
 	    // echo "message: " . $message . "<br><hr><br>";
-	    $b++;
-    }	
+	    $dom = new DOMDocument();
+	    $dom->loadHTML($message);
+	    $xpath = new DOMXPath($dom);
+		$tables = $xpath->query('.//p/blockquote'); // fetch all tables inside td
+		$temp = array();
+    }
+    die;
+	    
  
 //This is where you would want to start parsing your emails, send parts of the email into a database or trigger something fun to happen based on the emails.
  
